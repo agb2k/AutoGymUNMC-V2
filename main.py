@@ -1,3 +1,5 @@
+import time
+import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from secrets import secrets
@@ -24,24 +26,39 @@ password_textbox.send_keys(secrets["password"])
 login_button = driver.find_element(By.CSS_SELECTOR, "input.form-button")
 login_button.click()
 
+# Loop to pick 2 sequential slots
 for i in range(0, 2):
     # Redirect to booking
     driver.get("https://apps.nottingham.edu.my/jw/web/userview/booking/v/_/request")
     common_url = "/html/body/div[2]/div[1]/div/div[2]/main/div[1]/fieldset/form/"
-
     # Select room
     if "strength" in secrets["purpose"].lower():
-        strength_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[1]/i")
-        strength_room.click()
-        room = 1
+        try:
+            strength_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[1]/i")
+            strength_room.click()
+            room = 1
+        except selenium.common.exceptions.StaleElementReferenceException:
+            strength_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[1]/i")
+            strength_room.click()
+            room = 1
     elif "cardio" in secrets["purpose"].lower():
-        cardio_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[2]/i")
-        cardio_room.click()
-        room = 2
+        try:
+            cardio_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[2]/i")
+            cardio_room.click()
+            room = 2
+        except selenium.common.exceptions.StaleElementReferenceException:
+            cardio_room = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[2]/i")
+            cardio_room.click()
+            room = 2
     elif "swim" in secrets["purpose"].lower():
-        swimming_pool = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[3]/i")
-        swimming_pool.click()
-        room = 3
+        try:
+            swimming_pool = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[3]/i")
+            swimming_pool.click()
+            room = 3
+        except selenium.common.exceptions.StaleElementReferenceException:
+            swimming_pool = driver.find_element(By.XPATH, common_url + "div[1]/div[2]/div/div[1]/label[3]/i")
+            swimming_pool.click()
+            room = 3
 
     # Click next
     next_btn = driver.find_element(By.XPATH, common_url + 'div[3]/div[2]/div/i/input')
@@ -68,5 +85,14 @@ for i in range(0, 2):
                                common_url + f"div[9]/div[2]/div[2]/div[1]/label[{int(secrets['time1']) + i}]/i")
     slot.click()
 
-    complete_btn = driver.find_element(By.XPATH, common_url + f"div[11]/div[2]/div/i/input")
+    complete_btn = driver.find_element(By.XPATH, common_url + "div[11]/div[2]/div/i/input")
     complete_btn.click()
+
+    try:
+        response = driver.find_element(By.XPATH, common_url + "/div[9]/div[2]/div[2]/label/span[2]")
+        print(f"Response: {response.text}")
+    except:
+        print(f"Response: Successful Booking")
+    time.sleep(10)
+
+driver.close()

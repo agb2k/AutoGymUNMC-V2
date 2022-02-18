@@ -1,0 +1,1 @@
+"C:\Users\abhin\PycharmProjects\AutoGymUNMC-V2\venv\Scripts\Python.exe" "C:\Users\abhin\PycharmProjects\AutoGymUNMC-V2\main.py" exit

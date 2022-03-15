@@ -88,11 +88,17 @@ for i in range(0, 2):
     complete_btn = driver.find_element(By.XPATH, common_url + "div[11]/div[2]/div/i/input")
     complete_btn.click()
 
-    try:
-        response = driver.find_element(By.XPATH, common_url + "/div[9]/div[2]/div[2]/label/span[2]")
-        print(f"Response: {response.text}")
-    except:
+    if driver.current_url == "https://apps.nottingham.edu.my/jw/web/userview/booking/v/_/mybooking":
         print(f"Response: Successful Booking")
-    time.sleep(10)
+    else:
+        try:
+            response = driver.find_element(By.XPATH, common_url + "/div[9]/div[2]/div[2]/label/span[2]")
+        except:
+            response = driver.find_element(By.XPATH, common_url + "div[6]/div[2]/div/label/span[2]")
+
+        print(f"Response: {response.text}")
+
+    time.sleep(5)
 
 driver.close()
+exit()

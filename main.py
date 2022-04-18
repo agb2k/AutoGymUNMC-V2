@@ -4,10 +4,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from secrets import secrets
 import datetime
+import sys
 
 # Allows chrome to be headless with chrome version
 options = webdriver.ChromeOptions()
-options.headless = True
+options.headless = False
 driver = webdriver.Chrome(options=options)
 driver.get('https://apps.nottingham.edu.my/jw/web/login')
 
@@ -85,7 +86,7 @@ for i in range(0, 2):
                                common_url + f"div[9]/div[2]/div[2]/div[1]/label[{int(secrets['time1']) + i}]/i")
     slot.click()
 
-    complete_btn = driver.find_element(By.XPATH, common_url + "div[11]/div[2]/div/i/input")
+    complete_btn = driver.find_element(By.XPATH, common_url + "div[12]/div[2]/div/i/input")
     complete_btn.click()
 
     if driver.current_url == "https://apps.nottingham.edu.my/jw/web/userview/booking/v/_/mybooking":
@@ -98,7 +99,7 @@ for i in range(0, 2):
 
         print(f"Response: {response.text}")
 
-    time.sleep(5)
+    time.sleep(10)
 
 driver.close()
-exit()
+sys.exit(0)

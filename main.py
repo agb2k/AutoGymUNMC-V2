@@ -8,7 +8,7 @@ import sys
 
 # Allows chrome to be headless with chrome version
 options = webdriver.ChromeOptions()
-options.headless = False
+options.headless = True
 driver = webdriver.Chrome(options=options)
 driver.get('https://apps.nottingham.edu.my/jw/web/login')
 

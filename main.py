@@ -8,7 +8,7 @@ import sys
 
 # Allows chrome to be headless with chrome version
 options = webdriver.ChromeOptions()
-options.headless = True
+options.headless = False
 driver = webdriver.Chrome(options=options)
 driver.get('https://apps.nottingham.edu.my/jw/web/login')
 
@@ -24,7 +24,8 @@ user_textbox.send_keys(secrets["user"])
 password_textbox = driver.find_element(By.ID, "j_password")
 password_textbox.send_keys(secrets["password"])
 
-login_button = driver.find_element(By.CSS_SELECTOR, "input.form-button")
+login_button = driver.find_element(By.XPATH,
+                                   "/html/body/div[2]/div[3]/div/div/main/form/table/tbody/tr[3]/td[2]/i")
 login_button.click()
 
 # Loop to pick 2 sequential slots
